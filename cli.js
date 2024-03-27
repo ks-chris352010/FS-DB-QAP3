@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 
+// This was just for me to test the database.
 const { program } = require('commander');
-const { getAllUsers, createUser, updateUser, deleteUser } = require('./src/dal/DataAccess');
+const { getAll, createEntry, updateEntry, deleteEntry } = require('./src/dal/DataAccess');
 
 program
   .version('1.0.0')
@@ -11,13 +12,13 @@ program
 program
   .command('list')
   .alias('ls')
-  .description('List all users')
+  .description('List all')
   .action(async () => {
     try {
-      const users = await getAllUsers();
-      console.log('Users:');
-      users.forEach(user => {
-        console.log(`- ID: ${user.user_id}, Username: ${user.username}, Email: ${user.email}, Rank: ${user.rank}`);
+      const users = await getAll();
+      console.log('Names and Numbers:');
+      users.forEach(entry => {
+        console.log(`- ID: ${entry.id}, name: ${entry.name}, number: ${entry.number}`);
       });
     } catch (error) {
       console.error('Error listing users:', error.message);
@@ -26,11 +27,11 @@ program
 
 // Command to add a user
 program
-  .command('add <username> <email> <password> <rank>')
-  .description('Add a new user')
-  .action(async (username, email, password, rank) => {
+  .command('add <name> <number>')
+  .description('Add a new entry')
+  .action(async (name, number) => {
     try {
-      await createUser(username, email, password, rank);
+      await createEntry(name, number);
       console.log('User added successfully');
     } catch (error) {
       console.error('Error adding user:', error.message);
@@ -39,11 +40,11 @@ program
 
 // Command to update a user
 program
-  .command('update <userId> <username> <email> <password> <rank>')
+  .command('update <id> <name> <number>')
   .description('Update user details')
-  .action(async (userId, username, email, password, rank) => {
+  .action(async (id, name, number) => {
     try {
-      await updateUser(userId, username, email, password, rank);
+      await updateEntry(id, name, number);
       console.log('User updated successfully');
     } catch (error) {
       console.error('Error updating user:', error.message);
@@ -52,11 +53,11 @@ program
 
 // Command to delete a user
 program
-  .command('delete <userId>')
+  .command('delete <id>')
   .description('Delete a user')
-  .action(async (userId) => {
+  .action(async (id) => {
     try {
-      await deleteUser(userId);
+      await deleteEntry(id);
       console.log('User deleted successfully');
     } catch (error) {
       console.error('Error deleting user:', error.message);

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Entry</title>
+    <style>
+        body {
+            background-color: orangered;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <center>
+        <h1>Edit Entry</h1>
+        <form action="/update/<%= entryId %>" method="POST">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" value="<%= entry.name %>">
+            <br>
+            <label for="number">Number:</label>
+            <input type="text" id="number" name="number" value="<%= entry.number %>">
+            <br>
+            <button type="submit">Update</button>
+        </form>
+    </center>
+</body>
+</html>

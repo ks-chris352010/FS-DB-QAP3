@@ -1,0 +1,5 @@
+CREATE TABLE people (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    number VARCHAR(20) NOT NULL
+);
